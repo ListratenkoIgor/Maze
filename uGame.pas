@@ -60,6 +60,7 @@ type
 
   public
     { Public declarations }
+
   end;
 
 

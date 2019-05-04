@@ -280,11 +280,12 @@ object fmDesigner: TfmDesigner
   object pbDesignerGrid: TPaintBox
     Left = 8
     Top = 156
-    Width = 481
-    Height = 321
+    Width = 480
+    Height = 320
     Color = clBtnHighlight
     ParentColor = False
     OnMouseDown = pbDesignerGridMouseDown
+    OnMouseMove = pbDesignerGridMouseMove
     OnPaint = pbDesignerGridPaint
   end
   object edComment: TEdit
@@ -302,7 +303,7 @@ object fmDesigner: TfmDesigner
     Top = 87
     Width = 225
     Height = 21
-    MaxLength = 10
+    MaxLength = 100
     TabOrder = 1
     Text = 'Title'
     OnChange = edTitleChange
@@ -390,13 +391,14 @@ object fmDesigner: TfmDesigner
     NumGlyphs = 2
     TabOrder = 6
   end
-  object Button1: TButton
+  object btnLoad: TButton
     Left = 494
     Top = 59
     Width = 81
     Height = 25
     Caption = 'Load / create'
     TabOrder = 7
+    OnClick = btnLoadClick
   end
   object SaveAs: TBitBtn
     Left = 407
@@ -444,7 +446,7 @@ object fmDesigner: TfmDesigner
     TabOrder = 10
     OnClick = btnDeleteClick
   end
-  object OpenDialog1: TOpenDialog
+  object dlgOpenFile: TOpenDialog
     DefaultExt = 'dat'
     Filter = 'Levels files (*.dat)|*.dat|All files (*.*)|*.*'
     Title = 'Open levels file'

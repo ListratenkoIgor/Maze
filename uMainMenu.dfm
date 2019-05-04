@@ -13,13 +13,21 @@ object Form3: TForm3
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Button1: TButton
+  object btnNewGame: TButton
     Left = 192
-    Top = 80
+    Top = 48
     Width = 75
     Height = 25
-    Caption = 'Button1'
+    Caption = 'btnNewGame'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnNewGameClick
+  end
+  object btnLoad: TButton
+    Left = 192
+    Top = 79
+    Width = 75
+    Height = 25
+    Caption = 'btnLoad'
+    TabOrder = 1
   end
 end

@@ -3,7 +3,7 @@ unit Unit4;
 interface
 
 uses
-   Vcl.Grids,Vcl.Controls;
+   Vcl.Grids,Vcl.Controls,System.SysUtils;
 type
    TElement = (elFree,elWall,elWater,elInvFree,elInvWall,elHeart,elEnergy,elExit,elBall,elWaterBall);//pit,pitExit,teleport
    TMap = array [0..29,0..19] of TElement ;
@@ -20,11 +20,25 @@ type
    end;
    TLevelArray = array of TLevel;
 
-   TOrdMap =  array [0..29,0..19] of Low(TElement)..High(TElement);
+
+   EMyExceptions = class(Exception);
+   EBallNonExist = class(EMyExceptions);
+//EHeartNonExist = class(Exception);
+   EExitNonExist = class(EMyExceptions);
+   ETooMuchBalls = class(EMyExceptions);
 const
    EnergyValue = 20;
    MaxEnergy = 200;
-
+resourcestring
+   sEOF = 'Попытка чтения за границами файла';
+   sNotAssigned = 'Файл не назначен';
+   sNotOpen = 'Файл не был открыт';
+   sNotRead   = 'Файл не был открыт для ввода';
+   sNotWrite  = 'Файл не был открыт для вывода';
+   sBadRead   = 'Ошибка входного формата';
+   sBallNonExist =  'Error.Ball not exist in map: ';
+   sTooMuchBalls = 'Error.Must be only 1 ball on the map.Too much balls in map: ';
+   sExitNonExist = 'Error.Ball not exist in map: ';
 
 var
    ElementList: TImageList;

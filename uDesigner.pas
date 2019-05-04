@@ -23,9 +23,9 @@ type
     Bevel3: TBevel;
     SaveBtn: TBitBtn;
     BitBtn2: TBitBtn;
-    Button1: TButton;
+    btnLoad: TButton;
     SaveAs: TBitBtn;
-    OpenDialog1: TOpenDialog;
+    dlgOpenFile: TOpenDialog;
     dlgSaveFile: TSaveDialog;
     Bevel1: TBevel;
     Label1: TLabel;
@@ -68,12 +68,15 @@ type
     procedure FormActivate(Sender: TObject);
     procedure pbDesignerGridPaint(Sender: TObject);
     procedure btnAddLevelClick(Sender: TObject);
-    procedure cmbLevelChange(Sender: TObject);
+    procedure cmbLevelChange(Sender: TObject;IsDefined:Boolean);
     procedure btnDeleteClick(Sender: TObject);
     procedure SaveAsClick(Sender: TObject);
     procedure edCommentChange(Sender: TObject);
     procedure edTitleChange(Sender: TObject);
     procedure edEnergyChange(Sender: TObject);
+    procedure pbDesignerGridMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure btnLoadClick(Sender: TObject);
   protected
 
   private
@@ -94,11 +97,6 @@ type
 
 //TTypeFile = file of TLevel;
 
-EBallNonExist = class(Exception);
-//EHeartNonExist = class(Exception);
-EExitNonExist = class(Exception);
-ETooMuchBalls = class(Exception);
-
 var
   fmDesigner: TfmDesigner;
   Element: TElement;
@@ -109,7 +107,7 @@ var
 implementation
 
 {$R *.dfm}
-
+uses uMainMenu;
 {Model-----------------------------------------------------------------------------------------------------}
 procedure TfmDesigner.AddLevel();
 begin
@@ -125,7 +123,7 @@ begin
    Self.edTitleChange(Self);
    Self.edEnergyChange(Self);
 
-   Self.cmbLevelChange(Self);
+   Self.cmbLevelChange(Self,True);
 end;
 
 procedure TfmDesigner.DeleteLevel();
@@ -145,7 +143,8 @@ begin
    edComment.Text := LevelArray[CurrentLevel-1].Comment;
    edEnergy.Text := IntToStr(LevelArray[CurrentLevel-1].StartEnergy);
    cmbLevel.Text := IntToStr(CurrentLevel);
-   //Self.cmbLevelChange(Self);
+   //pbDesignerGrid.Repaint;
+   Self.cmbLevelChange(Self,False);
 end;
 
 function TfmDesigner.CheckLevels():Boolean;
@@ -158,6 +157,7 @@ begin
       begin
          IsBallExist := False;
          IsExitExist := False;
+         LevelArray[levelIndex].TotalHearts := 0;
          for i := 0 to MapHeight - 1 do
             for j := 0 to MapWidth - 1 do
             begin
@@ -193,16 +193,18 @@ begin
       CheckLevels := True;
    except
       on E: EBallNonExist do
-         MessageBox(Self.Handle,PWideChar('Error.Ball not exist in map: '+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
+         MessageBox(Self.Handle,PWideChar(sBallNonExist+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
       on E: ETooMuchBalls do
-         MessageBox(Self.Handle,PWideChar('Error.Must be only 1 ball on the map.Too much balls in map: '+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
+         MessageBox(Self.Handle,PWideChar(sTooMuchBalls+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
       on E: EExitNonExist do
-         MessageBox(Self.Handle,PWideChar('Error.Ball not exist in map: '+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
+         MessageBox(Self.Handle,PWideChar(sExitNonExist+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
       else
          MessageBox(Self.Handle,PWideChar('Unexpected error'),'Error',mb_Ok+mb_IconError+mb_ApplModal);
       CheckLevels := False;
    end;
 end;
+
+
 {   TLevel = record
       CurrentLevel: Integer;
       TotalHearts: Integer;
@@ -215,7 +217,7 @@ end;
    end;}
 procedure TfmDesigner.SaveFile(FileName: string);
 var
-   ResultFile: Textfile;
+   ResultFile: TextFile;
    LevelIndex,i,j: Integer;
 begin
    //Initialize LevelArray
@@ -291,8 +293,6 @@ begin
    end;
 end;
 
-
-
 procedure TfmDesigner.pbDesignerGridPaint(Sender: TObject);
 begin
    DrawMap();
@@ -315,6 +315,21 @@ begin
    begin
       LevelArray[CurrentLevel - 1].LevelMap[CoordX,CoordY] := elFree;
       DrawCell(CoordX,CoordY,True);
+   end;
+end;
+
+procedure TfmDesigner.pbDesignerGridMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+   Button:TMouseButton;
+begin
+   if (ssRight in Shift) or (ssLeft in Shift) then
+   begin
+      if ssRight in Shift then
+         Button :=  mbRight
+      else
+         Button:= mbLeft;
+      pbDesignerGridMouseDown(Self,Button,Shift,X,Y);
    end;
 end;
 
@@ -375,18 +390,42 @@ begin
       end;
 end;
 
-procedure TfmDesigner.cmbLevelChange(Sender: TObject);
+procedure TfmDesigner.btnLoadClick(Sender: TObject);
+var
+   i: Integer;
+   FileName: string;
 begin
-   LevelArray[CurrentLevel-1].Comment := edComment.Text;
-   LevelArray[CurrentLevel-1].Title := edTitle.Text;
-   LevelArray[CurrentLevel-1].StartEnergy := StrToInt(edEnergy.Text);
+   LevelArray := nil;
+   if dlgOpenFile.Execute then
+   begin
+      FileName := dlgOpenFile.FileName;
+      if Form3.ReadFromFile(FileName) then
+      begin
+         cmbLevel.Clear;
+         for i := 1 to Length(LevelArray) do
+            cmbLevel.AddItem(IntToStr(i),nil);
+         CurrentLevel := 1;
+         cmbLevel.Text := '1';
+         Self.cmbLevelChange(Self,False);
+      end;
+
+
+   end;
+
+end;
+
+procedure TfmDesigner.cmbLevelChange(Sender: TObject;IsDefined:Boolean);
+begin
+   if IsDefined then
+   begin
+      LevelArray[CurrentLevel-1].Comment := edComment.Text;
+      LevelArray[CurrentLevel-1].Title := edTitle.Text;
+      LevelArray[CurrentLevel-1].StartEnergy := StrToInt(edEnergy.Text);
+   end;
    CurrentLevel := StrToInt(cmbLevel.Text);
    edComment.Text := LevelArray[CurrentLevel-1].Comment;
    edTitle.Text := LevelArray[CurrentLevel-1].Title;
    edEnergy.Text := IntToStr(LevelArray[CurrentLevel-1].StartEnergy);
-
-
-
    pbDesignerGrid.Repaint;
    //DrawMap();
 end;
