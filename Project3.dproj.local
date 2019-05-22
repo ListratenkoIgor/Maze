@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.117,C:\Users\Admin\Desktop\курсач\uSpesialMessagesss.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.084,C:\Users\Admin\Desktop\курсач\Unit2.dfm=C:\Users\Admin\Desktop\курсач\uButtonMessage.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.365,C:\Users\Admin\Desktop\курсач\Unit2.dfm=C:\Users\Admin\Desktop\курсач\uDesigner.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.196,=D:\закачка\Blib\Blib.exe\Energy.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.798,C:\Users\Admin\Desktop\курсач\uScores.pas=C:\Users\Admin\Desktop\курсач\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.473,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.537,C:\Users\Admin\Desktop\курсач\Unit2.dfm=C:\Users\Admin\Desktop\курсач\uSpesialMessages.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.215,D:\закачка\Blib\Blib.exe\Water.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.278,C:\Users\Admin\Desktop\курсач\uTypes.pas=C:\Users\Admin\Desktop\курсач\Unit4.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.215,C:\Users\Admin\Desktop\курсач\uMain.dfm=C:\Users\Admin\Desktop\курсач\uGame.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.083,C:\Users\Admin\Desktop\курсач\Unit2.dfm=C:\Users\Admin\Desktop\курсач\uUserInfo.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.905,C:\Users\Admin\Desktop\курсач\Unit2.dfm=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.287,=D:\закачка\Blib\Blib.exe\Water.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.230,D:\закачка\Blib\Blib.exe\Energy.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.798,C:\Users\Admin\Desktop\курсач\uScores.dfm=C:\Users\Admin\Desktop\курсач\Unit3.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.215,C:\Users\Admin\Desktop\курсач\uMain.pas=C:\Users\Admin\Desktop\курсач\uGame.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.268,=D:\закачка\Blib\Blib.exe\Hidewall.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.799,=C:\Users\Admin\Desktop\курсач\Unit4.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.230,=D:\закачка\Blib\Blib.exe\Heart.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.215,D:\закачка\Blib\Blib.exe\Heart.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.184,D:\закачка\Blib\Blib.exe\Hidewall.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.558,C:\Users\Admin\Desktop\курсач\uSpecialMessages.dfm=C:\Users\Admin\Desktop\курсач\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.811,C:\Users\Admin\Desktop\курсач\Unit3.dfm=C:\Users\Admin\Desktop\курсач\uMain.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.255,C:\Users\Admin\Desktop\курсач\s.dfm=C:\Users\Admin\Desktop\курсач\Unit3.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.646,C:\Users\Admin\Desktop\курсач\uMainMenu.pas=C:\Users\Admin\Desktop\курсач\s.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.255,C:\Users\Admin\Desktop\курсач\s.pas=C:\Users\Admin\Desktop\курсач\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.646,C:\Users\Admin\Desktop\курсач\uMainMenu.dfm=C:\Users\Admin\Desktop\курсач\s.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.244,=C:\Users\Admin\Desktop\курсач\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.240,=C:\Users\Admin\Desktop\курсач\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.799,=C:\Users\Admin\Desktop\курсач\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.707,C:\Users\Admin\Desktop\курсач\Project3.dproj=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project3.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.346,D:\закачка\Blib\Blib.exe\Exit.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.216,=D:\закачка\Blib\Blib.exe\Exit.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.811,C:\Users\Admin\Desktop\курсач\Unit3.pas=C:\Users\Admin\Desktop\курсач\uMain.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.247,=D:\закачка\Blib\Blib.exe\Hidefree.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.230,D:\закачка\Blib\Blib.exe\Error.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.204,=D:\закачка\Blib\Blib.exe\Error.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.694,C:\Users\Admin\Desktop\курсач\uSpesialMessages.dfm=C:\Users\Admin\Desktop\курсач\uSpesialMessagesss.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.679,C:\Users\Admin\Desktop\курсач\uSpesialMessages.pas=C:\Users\Admin\Desktop\курсач\uSpesialMessagesss.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.199,D:\закачка\Blib\Blib.exe\Hidefree.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.558,C:\Users\Admin\Desktop\курсач\uSpecialMessages.pas=C:\Users\Admin\Desktop\курсач\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.537,C:\Users\Admin\Desktop\курсач\Unit2.pas=C:\Users\Admin\Desktop\курсач\uSpesialMessages.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.365,C:\Users\Admin\Desktop\курсач\Unit2.pas=C:\Users\Admin\Desktop\курсач\uDesigner.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.083,C:\Users\Admin\Desktop\курсач\Unit2.pas=C:\Users\Admin\Desktop\курсач\uUserInfo.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.169,C:\Users\Admin\Desktop\курсач\uConstsTypes.pas=C:\Users\Admin\Desktop\курсач\uMethodsData.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.538,C:\Users\Admin\Desktop\курсач\uConstsTypes.pas=C:\Users\Admin\Desktop\курсач\uTypes.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.905,C:\Users\Admin\Desktop\курсач\Unit2.pas=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.746,=C:\Users\Admin\Desktop\курсач\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.264,=C:\Users\Admin\Desktop\курсач\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.084,C:\Users\Admin\Desktop\курсач\Unit2.pas=C:\Users\Admin\Desktop\курсач\uButtonMessage.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.459,C:\Users\Admin\Desktop\курсач\uSpecialMessages.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.357,=C:\Users\Admin\Desktop\курсач\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.286,=C:\Users\Admin\Desktop\курсач\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.702,=C:\Users\Admin\Desktop\курсач\Unit2.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="uDesigner.pas"/>
+    <File Path="uDesigner.dfm"/>
+    <File Path="uGame.pas"/>
+    <File Path="uGame.dfm"/>
+    <File Path="uMainMenu.pas"/>
+    <File Path="uMainMenu.dfm"/>
+    <File Path="uMethodsData.pas"/>
+    <File Path="uScores.pas"/>
+    <File Path="uScores.dfm"/>
+    <File Path="uUserInfo.pas"/>
+    <File Path="uUserInfo.dfm"/>
+    <File Path="uButtonMessage.pas"/>
+    <File Path="uButtonMessage.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

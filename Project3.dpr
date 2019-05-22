@@ -1,21 +1,32 @@
 program Project3;
 
+
+
 uses
   Vcl.Forms,
-  uDesigner in 'uDesigner.pas' {fmDesigner},
-  uGame in 'uGame.pas' {fmGame},
-  Unit4 in 'Unit4.pas',
-  uMainMenu in 'uMainMenu.pas' {Form3},
-  Unit2 in 'Unit2.pas' {fmMessages};
+  uMethodsData in 'uMethodsData.pas',
+  uDesigner in 'uDesigner.pas' {frmDesigner},
+  uGame in 'uGame.pas' {frmGame},
+  uMainMenu in 'uMainMenu.pas' {frmMain},
+  uScores in 'uScores.pas' {frmScores},
+  uUserInfo in 'uUserInfo.pas' {frmUserInfo},
+  uButtonMessage in 'uButtonMessage.pas' {frmButtonMessage},
+  Vcl.Themes,
+  Vcl.Styles;
+
+//Unit2 in 'Unit2.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TfmGame, fmGame);
-  Application.CreateForm(TfmDesigner, fmDesigner);
-  Application.CreateForm(TfmMessages, fmMessages);
+  TStyleManager.TrySetStyle('Iceberg Classico');
+  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfrmGame, frmGame);
+  Application.CreateForm(TfrmDesigner, frmDesigner);
+  Application.CreateForm(TfrmScores, frmScores);
+  Application.CreateForm(TfrmUserInfo, frmUserInfo);
+  Application.CreateForm(TfrmButtonMessage, frmButtonMessage);
   Application.Run;
 end.
