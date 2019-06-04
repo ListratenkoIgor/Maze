@@ -2,11 +2,10 @@ unit uDesigner;
 
 interface
 
-uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.Buttons,Vcl.Samples.Spin, Vcl.StdCtrls,
   Vcl.ExtCtrls, System.ImageList, Vcl.ImgList,System.Actions, Vcl.ActnList,
-  uMethodsData;
+  uMethodsData, Vcl.Menus, uHelp;
 
 type
   TfrmDesigner = class(TForm)
@@ -21,10 +20,10 @@ type
     btnAddLevel: TButton;
     edEnergy: TSpinEdit;
     Bevel3: TBevel;
-    SaveBtn: TBitBtn;
-    BitBtn2: TBitBtn;
+    bitbtnSave: TBitBtn;
+    bitbtnCancel: TBitBtn;
     btnLoad: TButton;
-    SaveAs: TBitBtn;
+    bitbtnSaveAs: TBitBtn;
     dlgOpenFile: TOpenDialog;
     dlgSaveFile: TSaveDialog;
     Bevel1: TBevel;
@@ -60,33 +59,45 @@ type
     spdbtnExit: TSpeedButton;
     pbDesignerGrid: TPaintBox;
     btnDelete: TButton;
-    procedure BtnElementClick(Sender: TObject);
+    MainMenu1: TMainMenu;
+    miMenu: TMenuItem;
+    miHelp: TMenuItem;
+    PopupMenu1: TPopupMenu;
+    procedure btnElementClick(Sender: TObject);
     procedure pbDesignerGridMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure btFillMapClick(Sender: TObject);
-//    procedure pbDesignerGridMouseMove(Sender: TObject; Shift: TShiftState; X,Y: Integer);
-    procedure FormActivate(Sender: TObject);
     procedure pbDesignerGridPaint(Sender: TObject);
     procedure btnAddLevelClick(Sender: TObject);
     procedure cmbLevelChange(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
-    procedure SaveAsClick(Sender: TObject);
+    procedure bitbtnSaveAsClick(Sender: TObject);
     procedure SaveLevelInfo(Sender: TObject);
     procedure pbDesignerGridMouseMove(Sender: TObject; Shift: TShiftState; X,Y: Integer);
     procedure btnLoadClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure bitbtnSaveClick(Sender: TObject);
+    procedure edEnergyChange(Sender: TObject);
+    procedure edTitleChange(Sender: TObject);
+    procedure edCommentChange(Sender: TObject);
+    procedure bitbtnCancelClick(Sender: TObject);
+    procedure miHelpClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   protected
 
   private
     { Private declarations }
+//     LevelArray: TLevelArray;
+     Element: TElement;
+     CurrentLevel: Integer;
+     CoordX,CoordY: Integer;
      function CheckLevels():Boolean;
      procedure SaveFile(FileName: string);
      procedure AddLevel();
      procedure DeleteLevel();
 
      procedure DrawMap();
-
      procedure DrawCell(CoordX,CoordY: Integer; IsEmpty: Boolean);
 
 
@@ -98,12 +109,9 @@ type
 //TTypeFile = file of TLevel;
 
 var
-  frmDesigner: TfrmDesigner;
-  LevelArray: TLevelArray;
-  Element: TElement;
-  CurrentLevel: Integer;
-  CoordX,CoordY: Integer;
-  //FreeMap: array[0..29,0..19] of TElement;
+   frmDesigner: TfrmDesigner;
+   LastFileName: string;
+   IsModified: Boolean;
 
 implementation
 
@@ -113,6 +121,7 @@ uses uMainMenu;
 procedure TfrmDesigner.AddLevel();
 begin
 //   Self.SaveLevelInfo(Self);
+   IsModified := True;
    CurrentLevel := Length(LevelArray)+1;
    SetLength(LevelArray,CurrentLevel);
    cmbLevel.AddItem(IntToStr(CurrentLevel),nil);
@@ -153,6 +162,7 @@ var
    LevelIndex,i,j: Integer;
    IsBallExist,IsExitExist:Boolean;
 begin
+   CheckLevels := False;
    try
       for LevelIndex := 0 to High(LevelArray) do
       begin
@@ -190,32 +200,24 @@ begin
             raise EBallNonExist.Create('');
          if not IsExitExist then
             raise EExitNonExist.Create('');
+         if not (LevelArray[levelIndex].StartEnergy in [1..cnstMaxEnergy]) then
+            raise EIncorrectEnergy.Create('');
       end;
       CheckLevels := True;
    except
       on E: EBallNonExist do
-         MessageBox(Self.Handle,PWideChar(sBallNonExist+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
+         MessageBox(Self.Handle,PWideChar(sBallNonExist+IntToStr(LevelIndex+1)),'Error',msgErrorProperty);
       on E: ETooMuchBalls do
-         MessageBox(Self.Handle,PWideChar(sTooMuchBalls+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
+         MessageBox(Self.Handle,PWideChar(sTooMuchBalls+IntToStr(LevelIndex+1)),'Error',msgErrorProperty);
       on E: EExitNonExist do
-         MessageBox(Self.Handle,PWideChar(sExitNonExist+IntToStr(LevelIndex+1)),'Error',mb_Ok+mb_IconError+mb_ApplModal);
+         MessageBox(Self.Handle,PWideChar(sExitNonExist+IntToStr(LevelIndex+1)),'Error',msgErrorProperty);
+      on E: EIncorrectEnergy do
+         MessageBox(Self.Handle,PWideChar(sIncorrectEnergy+IntToStr(LevelIndex+1)),'Error',msgErrorProperty);
       else
-         MessageBox(Self.Handle,PWideChar('Unexpected error'),'Error',mb_Ok+mb_IconError+mb_ApplModal);
-      CheckLevels := False;
+         MessageBox(Self.Handle,PWideChar('Unexpected error'),'Error',msgErrorProperty);
    end;
 end;
 
-
-{   TLevel = record
-      CurrentLevel: Integer;
-      TotalHearts: Integer;
-      StartEnergy: Integer;
-      InitialX: Integer;
-      InitialY: Integer;
-      LevelMap: TMap;
-      Comment: string[30];
-      Title: string[25];
-   end;}
 procedure TfrmDesigner.SaveFile(FileName: string);
 var
    ResultFile: TextFile;
@@ -233,7 +235,6 @@ begin
          Writeln(ResultFile,LevelArray[LevelIndex].StartEnergy);
          Writeln(ResultFile,LevelArray[LevelIndex].InitialX);
          Writeln(ResultFile,LevelArray[LevelIndex].InitialY);
-         //Writeln(ResultFile);
          for i := 0 to MapHeight - 1 do
          begin
             for j := 0 to MapWidth - 1 do
@@ -245,6 +246,8 @@ begin
          Writeln(ResultFile,LevelArray[LevelIndex].Comment);
          Writeln(ResultFile,LevelArray[LevelIndex].Title);
       end;
+      IsModified := False;
+      LastFileName := FileName;
    finally
       CloseFile(ResultFile);
    end;
@@ -265,19 +268,40 @@ begin
 end;
 
 
+procedure TfrmDesigner.edCommentChange(Sender: TObject);
+begin
+   LevelArray[CurrentLevel-1].Comment:=edComment.Text;
+end;
+
+procedure TfrmDesigner.edEnergyChange(Sender: TObject);
+begin
+   if edEnergy.Text <> '' then
+      LevelArray[CurrentLevel-1].StartEnergy := StrToInt(edEnergy.Text)
+   else
+      LevelArray[CurrentLevel-1].StartEnergy := 0;
+end;
+
+procedure TfrmDesigner.edTitleChange(Sender: TObject);
+begin
+   LevelArray[CurrentLevel-1].Title:=edTitle.Text;
+end;
+
 procedure TfrmDesigner.DrawCell(CoordX: Integer; CoordY: Integer; IsEmpty: Boolean);
 var
    MyRect: TRect;
 begin
-      MyRect.Left :=  16 * CoordX;
-      MyRect.Top :=  16 * CoordY;
-      MyRect.Right := MyRect.Left + 15;
-      MyRect.Bottom := MyRect.Top + 15;
-      BitMapListDesigner.Draw(pbDesignerGrid.Canvas,myRect.Left,myRect.Top,ord(elFree), True);
-      if not IsEmpty then
-      begin
-         BitMapListDesigner.Draw(pbDesignerGrid.Canvas,myRect.Left,myRect.Top,ord(LevelArray[CurrentLevel - 1].LevelMap[CoordX,CoordY]), True);
-      end;
+   with MyRect do
+   begin
+      Left :=  16 * CoordX;
+      Top :=  16 * CoordY;
+      Right := Left + 15;
+      Bottom := Top + 15;
+   end;
+   BitMapListDesigner.Draw(pbDesignerGrid.Canvas,myRect.Left,myRect.Top,ord(elFree), True);
+   if not IsEmpty then
+   begin
+      BitMapListDesigner.Draw(pbDesignerGrid.Canvas,myRect.Left,myRect.Top,ord(LevelArray[CurrentLevel - 1].LevelMap[CoordX,CoordY]), True);
+   end;
 end;
 {
 procedure TfmDesigner.HighLightCell(Sender:TObject;CoordX: Integer; CoordY: Integer; Color: TColor);
@@ -302,8 +326,6 @@ end;
 procedure TfrmDesigner.pbDesignerGridMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-   //CoordX := (X)-X mod 16;//div 16;   // - pbDesignerGrid.Left
-  // CoordY := (Y)-Y mod 16;//div 16;   //- pbDesignerGrid.Top
    CoordX := (X)div 16;   // - pbDesignerGrid.Left
    CoordY := (Y)div 16;   //- pbDesignerGrid.Top
    if Button = mbLeft then
@@ -328,32 +350,35 @@ begin
       if ssRight in Shift then
          Button :=  mbRight
       else
-         Button:= mbLeft;
+         Button := mbLeft;
       pbDesignerGridMouseDown(Self,Button,Shift,X,Y);
    end;
 end;
 
-{procedure TfmDesigner.pbDesignerGridMouseMove(Sender: TObject; Shift: TShiftState; X,
-  Y: Integer);
+procedure TfrmDesigner.bitbtnCancelClick(Sender: TObject);
 begin
-   PredX := CoordX;
-   PredY := CoordY;
-   HighLightCell(CoordX,CoordY,clBlack);
-   //DrawCell(PredX,PredY,False);
-   CoordX := (X)-X mod 16;//div 16;   // - pbDesignerGrid.Left
-   CoordY := (Y)-Y mod 16;//div 16;   //- pbDesignerGrid.Top
-   HighLightCell(CoordX,CoordY,clRed);
-end;                   }
+   Self.Close;
+end;
 
-
-
-
-procedure TfrmDesigner.SaveAsClick(Sender: TObject);
+procedure TfrmDesigner.bitbtnSaveAsClick(Sender: TObject);
 begin
    if CheckLevels() then
    begin
       if dlgSaveFile.Execute then
          SaveFile(dlgSaveFile.FileName);
+   end;
+end;
+
+procedure TfrmDesigner.bitbtnSaveClick(Sender: TObject);
+begin
+   if LastFileName = '' then
+   begin
+      bitbtnSaveAs.Click;
+   end
+   else
+   begin
+      if CheckLevels() then
+         SaveFile(LastFileName);
    end;
 end;
 
@@ -373,8 +398,9 @@ begin
    end;
 end;
 
-procedure TfrmDesigner.BtnElementClick(Sender: TObject);
+procedure TfrmDesigner.btnElementClick(Sender: TObject);
 begin
+   IsModified := True;
    if Sender is TSpeedButton then
       with Sender as TSpeedButton do
       case Tag of
@@ -399,7 +425,6 @@ begin
    if dlgOpenFile.Execute then
    begin
       FileName := dlgOpenFile.FileName;
-
       if frmMain.ReadFromFile(FileName) then
       begin
          cmbLevel.Clear;
@@ -410,10 +435,7 @@ begin
         // Self.SaveLevelInfo(Self);
          Self.cmbLevelChange(Self);
       end;
-
-
    end;
-
 end;
 
 procedure TfrmDesigner.cmbLevelChange(Sender: TObject);
@@ -431,8 +453,10 @@ procedure TfrmDesigner.SaveLevelInfo(Sender: TObject);
 begin
    LevelArray[CurrentLevel-1].Comment:=edComment.Text;
    LevelArray[CurrentLevel-1].Title:=edTitle.Text;
-//
-   LevelArray[CurrentLevel-1].StartEnergy := StrToInt(edEnergy.Text);
+   if edEnergy.Text <> '' then
+      LevelArray[CurrentLevel-1].StartEnergy := StrToInt(edEnergy.Text)
+   else
+      LevelArray[CurrentLevel-1].StartEnergy := 0;
 end;
 
 
@@ -442,6 +466,7 @@ procedure TfrmDesigner.btFillMapClick(Sender: TObject);
 var
    i,j: integer;
 begin
+   IsModified := True;
    for i := 0 to MapHeight - 1 do
       for j := 0 to MapWidth - 1 do
          LevelArray[CurrentLevel - 1].LevelMap[i,j] := Element;
@@ -449,33 +474,36 @@ begin
 end;
 
 {init-----------------------------------------------------------------------------------------}
-procedure TfrmDesigner.FormActivate(Sender: TObject);
-begin
-  { LevelArray := nil;
-   AddLevel();
-   Element:=elFree; }
-   //btFillMap.Click;
-//   SetLength(LevelArray,1);
-//   cmbLevel.AddItem('1',nil);
-//   CurrentLevel := 1;
-{   for i := 0 to 8 do
-      cmbLevel.AddItem(IntToStr(i+1),nil);
-      cmbLevel.Items.Delete(cmbLevel.Items.Count-1);}
-
-end;
-
-
-
 procedure TfrmDesigner.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-   frmMain.Show;
+   LevelArray := nil;
+   frmMain.Visible := True;
+end;
+
+procedure TfrmDesigner.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+   sModified: string;
+begin
+   sModified := '';
+   if IsModified then
+      sModified := #13#10'Все несохранённые данные будут утеряны';
+   CanClose := Application.MessageBox(PWideChar(sExit+sModified),'Exit', msgQuestionProperty) = mrYes
 end;
 
 procedure TfrmDesigner.FormShow(Sender: TObject);
 begin
+   IsModified := False;
+   LastFileName:='';
    LevelArray := nil;
+   cmbLevel.Items.Clear;
    AddLevel();
    Element:=elFree;
+end;
+
+procedure TfrmDesigner.miHelpClick(Sender: TObject);
+begin
+   frmHelp.Show;
+   frmHelp.pgcHelp.ActivePageIndex := 1;
 end;
 
 end.

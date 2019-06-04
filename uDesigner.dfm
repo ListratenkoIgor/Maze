@@ -1,135 +1,138 @@
 object frmDesigner: TfrmDesigner
   Left = 0
   Top = 0
-  Caption = 'frmDesigner'
-  ClientHeight = 501
-  ClientWidth = 634
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Level designer'
+  ClientHeight = 471
+  ClientWidth = 619
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = MainMenu1
   OldCreateOrder = False
   Position = poDesktopCenter
   Scaled = False
-  OnActivate = FormActivate
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel2: TBevel
-    Left = 8
-    Top = 52
+    Left = 16
+    Top = 20
     Width = 371
     Height = 98
   end
   object Label8: TLabel
-    Left = 18
-    Top = 119
+    Left = 26
+    Top = 87
     Width = 25
     Height = 13
     Caption = 'Level'
   end
   object Label9: TLabel
-    Left = 18
-    Top = 92
+    Left = 26
+    Top = 60
     Width = 20
     Height = 13
     Caption = 'Title'
   end
   object lbComment: TLabel
-    Left = 18
-    Top = 65
+    Left = 26
+    Top = 33
     Width = 45
     Height = 13
     Caption = 'Comment'
   end
   object Label11: TLabel
-    Left = 322
-    Top = 63
+    Left = 330
+    Top = 31
     Width = 34
     Height = 13
     Caption = 'Energy'
   end
   object Bevel3: TBevel
-    Left = 385
-    Top = 52
+    Left = 393
+    Top = 20
     Width = 206
     Height = 98
   end
   object Bevel1: TBevel
-    Left = 495
-    Top = 156
+    Left = 503
+    Top = 124
     Width = 96
     Height = 321
   end
   object Label1: TLabel
-    Left = 536
-    Top = 242
+    Left = 544
+    Top = 210
     Width = 20
     Height = 13
     Caption = 'Wall'
   end
   object Label2: TLabel
-    Left = 536
-    Top = 214
+    Left = 544
+    Top = 182
     Width = 22
     Height = 13
     Caption = 'Free'
   end
   object Label3: TLabel
-    Left = 536
-    Top = 354
+    Left = 544
+    Top = 322
     Width = 27
     Height = 13
     Caption = 'Heart'
   end
   object Label4: TLabel
-    Left = 536
-    Top = 438
+    Left = 544
+    Top = 406
     Width = 16
     Height = 13
     Caption = 'Ball'
   end
   object Label5: TLabel
-    Left = 536
-    Top = 382
+    Left = 544
+    Top = 350
     Width = 34
     Height = 13
     Caption = 'Energy'
   end
   object Label6: TLabel
-    Left = 536
-    Top = 410
+    Left = 544
+    Top = 378
     Width = 18
     Height = 13
     Caption = 'Exit'
   end
   object Label7: TLabel
-    Left = 536
-    Top = 270
+    Left = 544
+    Top = 238
     Width = 30
     Height = 13
     Caption = 'Water'
   end
   object Label12: TLabel
-    Left = 536
-    Top = 326
+    Left = 544
+    Top = 294
     Width = 40
     Height = 13
     Caption = 'Inv.Wall'
   end
   object Label14: TLabel
-    Left = 536
-    Top = 298
+    Left = 544
+    Top = 266
     Width = 42
     Height = 13
     Caption = 'Inv.Free'
   end
   object spdbtnFree: TSpeedButton
-    Left = 508
-    Top = 205
+    Left = 516
+    Top = 173
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -145,8 +148,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnWall: TSpeedButton
     Tag = 1
-    Left = 508
-    Top = 233
+    Left = 516
+    Top = 201
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -162,8 +165,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnWater: TSpeedButton
     Tag = 2
-    Left = 508
-    Top = 261
+    Left = 516
+    Top = 229
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -179,8 +182,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnInvFree: TSpeedButton
     Tag = 3
-    Left = 508
-    Top = 289
+    Left = 516
+    Top = 257
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -196,8 +199,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnBall: TSpeedButton
     Tag = 8
-    Left = 508
-    Top = 429
+    Left = 516
+    Top = 397
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -213,8 +216,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnInvWall: TSpeedButton
     Tag = 4
-    Left = 508
-    Top = 317
+    Left = 516
+    Top = 285
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -230,8 +233,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnHeart: TSpeedButton
     Tag = 5
-    Left = 508
-    Top = 345
+    Left = 516
+    Top = 313
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -247,8 +250,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnEnergy: TSpeedButton
     Tag = 6
-    Left = 508
-    Top = 373
+    Left = 516
+    Top = 341
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -264,8 +267,8 @@ object frmDesigner: TfrmDesigner
   end
   object spdbtnExit: TSpeedButton
     Tag = 7
-    Left = 508
-    Top = 401
+    Left = 516
+    Top = 369
     Width = 22
     Height = 22
     Glyph.Data = {
@@ -280,8 +283,8 @@ object frmDesigner: TfrmDesigner
     OnClick = BtnElementClick
   end
   object pbDesignerGrid: TPaintBox
-    Left = 8
-    Top = 156
+    Left = 16
+    Top = 124
     Width = 480
     Height = 320
     Color = clBtnHighlight
@@ -291,28 +294,28 @@ object frmDesigner: TfrmDesigner
     OnPaint = pbDesignerGridPaint
   end
   object edComment: TEdit
-    Left = 91
-    Top = 60
+    Left = 99
+    Top = 28
     Width = 225
     Height = 21
     MaxLength = 100
     TabOrder = 0
     Text = 'Write here the comment for the level'
-    OnChange = SaveLevelInfo
+    OnChange = edCommentChange
   end
   object edTitle: TEdit
-    Left = 91
-    Top = 87
+    Left = 99
+    Top = 55
     Width = 225
     Height = 21
     MaxLength = 100
     TabOrder = 1
     Text = 'Title'
-    OnChange = SaveLevelInfo
+    OnChange = edTitleChange
   end
   object cmbLevel: TComboBox
-    Left = 91
-    Top = 114
+    Left = 99
+    Top = 82
     Width = 45
     Height = 21
     MaxLength = 2
@@ -321,8 +324,8 @@ object frmDesigner: TfrmDesigner
     OnChange = cmbLevelChange
   end
   object btnAddLevel: TButton
-    Left = 142
-    Top = 114
+    Left = 150
+    Top = 82
     Width = 84
     Height = 21
     Caption = 'Add Level'
@@ -330,23 +333,23 @@ object frmDesigner: TfrmDesigner
     OnClick = btnAddLevelClick
   end
   object edEnergy: TSpinEdit
-    Left = 322
-    Top = 87
+    Left = 330
+    Top = 55
     Width = 45
     Height = 22
     MaxValue = 200
     MinValue = 1
+    PopupMenu = PopupMenu1
     TabOrder = 4
     Value = 200
-    OnChange = SaveLevelInfo
+    OnChange = edEnergyChange
   end
-  object SaveBtn: TBitBtn
-    Left = 407
-    Top = 58
+  object bitbtnSave: TBitBtn
+    Left = 415
+    Top = 26
     Width = 81
     Height = 25
     Caption = 'Save'
-    Default = True
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -366,10 +369,11 @@ object frmDesigner: TfrmDesigner
       0000}
     NumGlyphs = 2
     TabOrder = 5
+    OnClick = bitbtnSaveClick
   end
-  object BitBtn2: TBitBtn
-    Left = 494
-    Top = 107
+  object bitbtnCancel: TBitBtn
+    Left = 502
+    Top = 75
     Width = 81
     Height = 25
     Caption = 'Cancel'
@@ -392,23 +396,23 @@ object frmDesigner: TfrmDesigner
       0000}
     NumGlyphs = 2
     TabOrder = 6
+    OnClick = bitbtnCancelClick
   end
   object btnLoad: TButton
-    Left = 494
-    Top = 58
+    Left = 502
+    Top = 26
     Width = 81
     Height = 25
     Caption = 'Load / create'
     TabOrder = 7
     OnClick = btnLoadClick
   end
-  object SaveAs: TBitBtn
-    Left = 407
-    Top = 107
+  object bitbtnSaveAs: TBitBtn
+    Left = 415
+    Top = 75
     Width = 81
     Height = 25
     Caption = 'Save as...'
-    Default = True
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -428,11 +432,11 @@ object frmDesigner: TfrmDesigner
       0000}
     NumGlyphs = 2
     TabOrder = 8
-    OnClick = SaveAsClick
+    OnClick = bitbtnSaveAsClick
   end
   object btFillMap: TButton
-    Left = 507
-    Top = 172
+    Left = 515
+    Top = 140
     Width = 76
     Height = 27
     Caption = 'Fill'
@@ -440,8 +444,8 @@ object frmDesigner: TfrmDesigner
     OnClick = btFillMapClick
   end
   object btnDelete: TButton
-    Left = 232
-    Top = 114
+    Left = 240
+    Top = 82
     Width = 84
     Height = 21
     Caption = 'Delete Level'
@@ -452,19 +456,19 @@ object frmDesigner: TfrmDesigner
     DefaultExt = 'dat'
     Filter = 'Levels files (*.dat)|*.dat|All files (*.*)|*.*'
     Title = 'Open levels file'
-    Left = 592
-    Top = 21
+    Left = 600
+    Top = 65525
   end
   object dlgSaveFile: TSaveDialog
     DefaultExt = 'dat'
     Filter = 'Levels files (*.dat)|*.dat|All files (*.*)|*.*'
     Title = 'Save levels file as...'
-    Left = 546
-    Top = 13
+    Left = 594
+    Top = 45
   end
   object BitMapListDesigner: TImageList
-    Left = 448
-    Top = 8
+    Left = 592
+    Top = 80
     Bitmap = {
       494C010109001800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -871,8 +875,8 @@ object frmDesigner: TfrmDesigner
   end
   object ActionList1: TActionList
     Images = BitMapListDesigner
-    Left = 504
-    Top = 16
+    Left = 600
+    Top = 104
     object Free: TAction
       Category = 'ElementClick'
       Caption = 'Free'
@@ -918,5 +922,20 @@ object frmDesigner: TfrmDesigner
       Caption = 'Ball'
       ImageIndex = 8
     end
+  end
+  object MainMenu1: TMainMenu
+    Left = 632
+    Top = 224
+    object miMenu: TMenuItem
+      Caption = 'Menu'
+    end
+    object miHelp: TMenuItem
+      Caption = 'Help'
+      OnClick = miHelpClick
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 600
+    Top = 192
   end
 end

@@ -42,9 +42,10 @@ type
    end;
 
 
-   TListNodes = class(TObject)
+   TListNodes = class
    private
-
+      function CheckRecord(const Node:TUserInfo): Boolean;
+      function IsEmpty(): Boolean;
       function ReadFromFile(): Boolean;
    public
       EntryPoint: PUserNode;
@@ -53,89 +54,115 @@ type
       destructor Destroy();override;
       procedure Add(UserInfo: TUserInfo);
       procedure DeleteList();
-      function IsEmpty(): Boolean;
+      function CheckUserName(UserName: string): Boolean;
       procedure WriteToFile();
    end;
-
-//types classes
-
-
 
    EMyExceptions = class(Exception);
    EIncorrectFileFormat = class(EMyExceptions);
    EIncorrectFileData = class(EMyExceptions);
    ECriticalDataLoss = class(EMyExceptions);
+   EIncorrectFileRecords = class(EMyExceptions);
    EBallNonExist = class(EMyExceptions);
-   EExitNonExist = class(EMyExceptions);
    ETooMuchBalls = class(EMyExceptions);
-
+   EExitNonExist = class(EMyExceptions);
+   EIncorrectEnergy = class(EMyExceptions);
 
 resourcestring
-   MainFile = 'Blip.dat';
-   RecordsFile = 'Scores.bur';
+   MainFile = 'blip.dat';
+   RecordsFile = 'Scores.mur';
    LevelsFileFormat = '.dat';
-   TypeFileFormat = '.bur';
-   sEOF = 'Попытка чтения за границами файла';
-   sNotAssigned = 'Файл не назначен';
-   sNotOpen = 'Файл не был открыт';
-   sNotRead = 'Файл не был открыт для ввода';
-   sNotWrite = 'Файл не был открыт для вывода';
-   sBadRead = 'Ошибка входного формата';
-   sFileNotExist = 'Файл с таким именем не найден';
-   sIncorrectFileFormat = 'Неверный формат файла';
-   sIncorrectFileData = 'Файл повреждён или содержит неверные данные';
-   sCriticalDataLoss = 'Критическоие повреждения файлов игры.Пожалуйста перестановите игру';
+   TypeFileFormat = '.mur';
+   sExit = 'Are you sure you want to quit?';
+   sProgressLoss = 'Current progress will be lost.';
+   sSaveResult = 'Do you want to save the results?';
+   sEOF = 'Attempt to read beyond file bounds';
+   sNotAssigned = 'File not assigned';
+   sNotOpen = 'The file hasn`t been opened.';
+   sNotRead = 'The file hasn`t been opened to input.';
+   sNotWrite = 'The file hasn`t been opened to output.';
+   sBadRead = 'Input format error';
+   sFileNotExist = 'No file with this name was found.';
+   sIncorrectFileFormat = 'Invalid file format';
+   sIncorrectFileData = 'The file is corrupt or contains invalid data.';
+   sIncorrectFileRecords = 'The file with user records was damaged. It will be overwritten.';
+   sCriticalDataLoss = 'Critical damage to game files. Please reinstall the game.';
+   sInvalidUserNameSymbols = 'Username should contain valid symbols: A - Z,a - z,0 - 9,''_'',''-''';
+   sInvalidUserNameLength = 'Username should contain 1 or more symbols,but no more 30';
    sBallNonExist =  'Error.Ball not exist in map: ';
    sTooMuchBalls = 'Error.Must be only 1 ball on the map.Too much balls in map: ';
    sExitNonExist = 'Error.Exit not exist in map: ';
+   sIncorrectEnergy = 'Error.Invalid energy value in map: ';
 //global const
 const
    cnstEnergyValue = 20;
    cnstMaxEnergy = 200;
    cnstEnergyLoss = 5;
    cnstMaxLevel = 15;
-   ValidNameSymbols = ['A'..'Z','a'..'z','А'..'Я','а'..'я','0'..'9','_','-'];
+   ValidNameSymbols = ['A'..'Z','a'..'z','0'..'9','_','-'];
 
 //global variables
 var
    LevelArray: TLevelArray;
    MapWidth: Integer = 20;
    MapHeight: Integer = 30;
+   msgQuestionProperty: Integer = MB_YESNO+MB_ICONQUESTION+MB_DEFBUTTON2;
+   msgErrorProperty: Integer = MB_OK+MB_ICONERROR+MB_APPLMODAL;
    GameMode: TGameMode;
    ListNodes: TListNodes;
+
 //Common methods
 procedure AppEventsException(Sender: TObject; E: Exception);
-
-
+function CompareTextAsInteger(const S1,S2: string):Integer;
+function TryStrToInt(const S1: string): Boolean;
 
 implementation
 //start block of common methods
 procedure AppEventsException(Sender: TObject; E: Exception);
 begin
-
-     if E is EInOutError then
-     case EInOutError(E).ErrorCode of
-        100: E.Message := sEOF;
-        101: E.Message := SysErrorMessage(Error_Disk_Full);
-        102: E.Message := sNotAssigned;
-        103: E.Message := sNotOpen;
-        104: E.Message := sNotRead;
-        105: E.Message := sNotWrite;
-        106: E.Message := SBadRead;
-        else
-           E.Message := SysErrorMessage(EInOutError(E).ErrorCode);
-     end;
-     if E is EIncorrectFileFormat then
-        E.Message := sIncorrectFileFormat;
-     if E is EIncorrectFileData then
-        E.Message := sIncorrectFileData;
-     if E is ECriticalDataLoss then
-        E.Message := sCriticalDataLoss;
-     Application.ShowException(E);
+   if E is EInOutError then
+   case EInOutError(E).ErrorCode of
+      100: E.Message := sEOF;
+      101: E.Message := SysErrorMessage(Error_Disk_Full);
+      102: E.Message := sNotAssigned;
+      103: E.Message := sNotOpen;
+      104: E.Message := sNotRead;
+      105: E.Message := sNotWrite;
+      106: E.Message := SBadRead;
+   else
+      E.Message := SysErrorMessage(EInOutError(E).ErrorCode);
+   end;
+   if E is EIncorrectFileFormat then
+      E.Message := sIncorrectFileFormat;
+   if E is EIncorrectFileData then
+      E.Message := sIncorrectFileData;
+   if E is ECriticalDataLoss then
+      E.Message := sCriticalDataLoss;
+   if E is EIncorrectFileRecords then
+      E.Message := sIncorrectFileRecords;
+   Application.ShowException(E);
 end;
 
+function TryStrToInt(const S1: string): Boolean;
+begin
+   try
+      StrToInt(S1);
+      Result := True;
+   except
+      Result := False;
+   end;
+end;
 
-
+function CompareTextAsInteger(const S1,S2: string):Integer;
+begin
+   if TryStrToInt(S1) and TryStrToInt(S2) then
+      if (StrToInt(S1) < StrToInt(S2)) then
+         CompareTextAsInteger := 1
+      else
+         CompareTextAsInteger := -1
+   else
+      CompareTextAsInteger := CompareText(S1,S2);
+end;
 
 //start block methods for TListNode
 constructor TListNodes.Create();
@@ -151,7 +178,6 @@ begin
    inherited;
    DeleteList();
    Dispose(EntryPoint);
-//   Dispose(Tail);
 end;
 
 function TListNodes.IsEmpty():Boolean;
@@ -180,12 +206,32 @@ begin
    while not IsEmpty() do
    begin
       Temp := EntryPoint^.Next;
+      if Temp = Tail then
+         Tail := EntryPoint;
       EntryPoint^.Next := Temp^.Next;
       Dispose(Temp);
    end;
 end;
 
+function TListNodes.CheckUserName(UserName: string): Boolean;
+var
+   IsCorrect: Boolean;
+   i: Integer;
+begin
+   IsCorrect := (Length(UserName) <= cnstMaxNameLength) and (Length(UserName) > 0);
+   i := 1;
+   while IsCorrect and (i <= Length(UserName)) do
+   begin
+      IsCorrect := UserName[i] in ValidNameSymbols;
+      Inc(i);
+   end;
+   CheckUserName := IsCorrect;
+end;
 
+function TListNodes.CheckRecord(const Node: TUserInfo):Boolean;
+begin
+   CheckRecord := CheckUserName(Node.UserName) and (Node.UserPassedTime >= 0) and (Node.UserPassedLevels >= 0);
+end;
 
 function TListNodes.ReadFromFile():Boolean;
 var
@@ -193,6 +239,7 @@ var
    UserFile: TTypeFile;
    Temp: TUserInfo;
 begin
+   {I-}
    IsFileOpen:=False;
    AssignFile(UserFile,RecordsFile);
    if FileExists(RecordsFile) then
@@ -203,37 +250,39 @@ begin
       except
          on E: Exception do
          begin
-            //AppEventsException(Self,E);
             CloseFile(UserFile);
             Result := False;
-            Exit;
          end;
       end;
    end
    else
    begin
-//      MessageBox(Self.Handle,PWideChar(sFileNotExist),'Error',mb_Ok+mb_IconError+mb_ApplModal);
       Rewrite(UserFile);
       CloseFile(UserFile);
-      Result := False;
+      Result := True;
+      IsFileOpen := False;
    end;
    if IsFileOpen then
    begin
       try
          Result := True;
       {I+}
-      //ioresultCheck
          Seek(UserFile,0);
          while not Eof(UserFile) do
          begin
             Read(UserFile,Temp);
-            //raise
+            if not CheckRecord(Temp) then
+               raise EIncorrectFileRecords.Create('');
             Add(Temp);
-
          end;
-
       except
-         DeleteList();
+         on E:EMyExceptions do
+         begin
+            AppEventsException(Self,E);
+            DeleteList();
+            CloseFile(UserFile);
+            Rewrite(UserFile);
+         end;
       end;
       CloseFile(UserFile);
    end;
@@ -245,7 +294,6 @@ var
    UserFile: TTypeFile;
    Temp: PUserNode;
 begin
-
    AssignFile(UserFile,RecordsFile);
    try
       Rewrite(UserFile);
@@ -261,9 +309,8 @@ begin
    CloseFile(UserFile);
 end;
 
-
 begin
    ListNodes := TListNodes.Create();
    if not ListNodes.ReadFromFile()then
-      abort;
+      Abort;
 end.

@@ -1,50 +1,84 @@
 object frmUserInfo: TfrmUserInfo
   Left = 0
   Top = 0
-  Caption = 'frmUserInfo'
-  ClientHeight = 231
-  ClientWidth = 505
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Maze'
+  ClientHeight = 241
+  ClientWidth = 515
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Color = clHighlightText
+  Font.Height = -15
+  Font.Name = 'Ink Free'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
+  OnCloseQuery = FormCloseQuery
+  OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
-  object Label1: TLabel
-    Left = 184
-    Top = 77
-    Width = 3
-    Height = 13
+  TextHeight = 19
+  object imBackground: TImage
+    Left = 0
+    Top = 0
+    Width = 513
+    Height = 241
+    Stretch = True
+    Transparent = True
   end
-  object Label2: TLabel
-    Left = 200
+  object lbEnterName: TLabel
+    Left = 184
     Top = 8
-    Width = 74
-    Height = 13
-    Caption = 'Enter yor name'
+    Width = 118
+    Height = 21
+    ParentCustomHint = False
+    BiDiMode = bdLeftToRight
+    Caption = 'Enter your name'
+    Color = clBtnFace
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlightText
+    Font.Height = -17
+    Font.Name = 'Ink Free'
+    Font.Style = []
+    ParentBiDiMode = False
+    ParentColor = False
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = False
+    Transparent = True
+    Visible = False
+    WordWrap = True
   end
   object edUserName: TEdit
-    Left = 176
+    Left = 184
     Top = 27
     Width = 121
-    Height = 21
+    Height = 27
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlightText
+    Font.Height = -15
+    Font.Name = 'Ink Free'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
-    Text = 'User1'
+    TextHint = 'Enter your name'
   end
   object btnSave: TButton
-    Left = 200
-    Top = 160
+    Left = 207
+    Top = 192
     Width = 75
     Height = 25
-    Caption = 'Save'
+    Caption = 'Accept'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clHighlightText
+    Font.Height = -20
+    Font.Name = 'Gabriola'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
     OnClick = btnSaveClick
   end
   object PopupMenu1: TPopupMenu
-    Left = 432
-    Top = 72
+    Left = 496
   end
 end
