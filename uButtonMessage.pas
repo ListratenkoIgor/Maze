@@ -2,7 +2,8 @@ unit uButtonMessage;
 
 interface
 
-uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
 
 type
@@ -29,8 +30,9 @@ uses
 
 procedure TfrmButtonMessage.bitbtnAcceptClick(Sender: TObject);
 begin
+///   frmGame.Timer.Enabled := True;
    frmGame.Enabled := True;
-   Self.CloseModal;
+   Self.Close;
 end;
 
 procedure TfrmButtonMessage.FormShow(Sender: TObject);

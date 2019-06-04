@@ -96,11 +96,6 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <UWP_DelphiLogo44>M.jpg</UWP_DelphiLogo44>
-        <UWP_DelphiLogo150>M.jpg</UWP_DelphiLogo150>
-        <Icon_MainIcon>M (1).ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -131,26 +126,6 @@
             <Form>frmButtonMessage</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="uHelp.pas">
-            <Form>frmHelp</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <RcItem Include="question.png">
-            <ResourceType>RCDATA</ResourceType>
-            <ResourceId>imQuestionExample</ResourceId>
-        </RcItem>
-        <RcItem Include="designer12.png">
-            <ResourceType>RCDATA</ResourceType>
-            <ResourceId>imDesignerExample</ResourceId>
-        </RcItem>
-        <RcItem Include="Game_over2.png">
-            <ResourceType>RCDATA</ResourceType>
-            <ResourceId>imGameOver</ResourceId>
-        </RcItem>
-        <RcItem Include="victory.png">
-            <ResourceType>RCDATA</ResourceType>
-            <ResourceId>imVictory</ResourceId>
-        </RcItem>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -180,40 +155,9 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="designer12.png" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Game_over2.png" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="victory.png" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="M.jpg" Configuration="Release" Class="UWP_DelphiLogo44">
-                    <Platform Name="Win32">
-                        <RemoteDir>Assets\</RemoteDir>
-                        <RemoteName>Logo44x44.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\Project3.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Project3.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="question.png" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

@@ -1,6 +1,6 @@
 program Project3;
 
-{$R *.dres}
+
 
 uses
   Vcl.Forms,
@@ -12,14 +12,15 @@ uses
   uUserInfo in 'uUserInfo.pas' {frmUserInfo},
   uButtonMessage in 'uButtonMessage.pas' {frmButtonMessage},
   Vcl.Themes,
-  Vcl.Styles,
-  uHelp in 'uHelp.pas' {frmHelp};
+  Vcl.Styles;
+
+//Unit2 in 'Unit2.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
-//  Application.MainFormOnTaskbar := True;
+  Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Iceberg Classico');
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmGame, frmGame);
@@ -27,6 +28,5 @@ begin
   Application.CreateForm(TfrmScores, frmScores);
   Application.CreateForm(TfrmUserInfo, frmUserInfo);
   Application.CreateForm(TfrmButtonMessage, frmButtonMessage);
-  Application.CreateForm(TfrmHelp, frmHelp);
   Application.Run;
 end.

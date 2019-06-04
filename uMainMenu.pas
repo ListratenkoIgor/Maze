@@ -2,31 +2,22 @@ unit uMainMenu;
 
 interface
 
-uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtDlgs,Vcl.MPlayer
-  ,uGame,uHelp,uDesigner,uScores,uMethodsData,PngImage, Vcl.ExtCtrls,
-  Vcl.Buttons, Vcl.Imaging.jpeg;
+  ,uGame,uDesigner,uScores,uMethodsData;
 
 type
    TfrmMain = class(TForm)
+      btnNewGame: TButton;
+      btnLoad: TButton;
     dlgOpenFile: TOpenTextFileDialog;
-    Image1: TImage;
-    spdbtnExit: TSpeedButton;
-    spdbtnHelp: TSpeedButton;
-    spdbtnLoadGame: TSpeedButton;
-    spdbtnScore: TSpeedButton;
-    spdbtnDesigner: TSpeedButton;
-    spdbtnNewGame: TSpeedButton;
+    btnDesigner: TButton;
+    btnScore: TButton;
     procedure btnNewGameClick(Sender: TObject);
     procedure btnLoadClick(Sender: TObject);
     procedure btnDesignerClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnScoreClick(Sender: TObject);
-    procedure btnExitClick(Sender: TObject);
-    procedure btnHelpClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure imQuestionClick(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
    private
       { Private declarations }
 
@@ -63,7 +54,7 @@ begin
       8:Result := elBall;
       9:Result := elWaterBall;
    else
-      raise EIncorrectFileData.Create('');
+//      raise EIncorrectFileData.Create('');
    end;
 end;
 var
@@ -185,73 +176,62 @@ end;
 
 
 
-procedure TfrmMain.btnExitClick(Sender: TObject);
-begin
-   Self.Close;
-end;
-
 procedure TfrmMain.btnLoadClick(Sender: TObject);
 begin
    if dlgOpenFile.Execute then
    begin
       if ReadFromFile(dlgOpenFile.FileName) then
       begin
+         //Exit;
          GameMode := gmUser;
-         Self.Visible := False;
+         Self.Hide;
          frmGame.Show;
+
       end;
+//      Lives := 3;
+//      CurrentLevel := 1;
+
    end;
+
+
+
 end;
 
 procedure TfrmMain.btnNewGameClick(Sender: TObject);
 begin
+{   MyLevel.TotalHearts := 36;
+   MyLevel.StartEnergy := 50;
+   MyLevel.InitialX := 2;
+   MyLevel.InitialY := 2;
+   MyLevel.LevelMap := MyMap;
+   MyLevel.Comment := 'Это должно быть легко))))))))))))))';
+   MyLevel.Title := 'Здесь могла быть ваша реклама';
+   Self.Enabled:= False;
+   CurrentLevel := 1;
+   Setlength(LevelArray,2);
+   LevelArray[0]:=MyLevel;//
+   LevelArray[1]:=MyLevel;//       }
+   //Self.Hide;
    if FileExists(MainFile) then
    begin
       ReadFromFile(MainFile);
+//      Lives := 3;
+//      CurrentLevel := 1;
       GameMode := gmStory;
-      Self.Visible := False;
-      frmGame.ShowModal;
+      Self.Hide;
+      frmGame.Show;
    end
    else
    begin
       raise ECriticalDataLoss.Create(sCriticalDataLoss);
    end;
-end;
-
-procedure TfrmMain.btnScoreClick(Sender: TObject);
-begin
-   //Self.Hide;
-   Self.Visible := False;
-   frmScores.ShowModal;
-end;
-
-procedure TfrmMain.btnHelpClick(Sender: TObject);
-begin
-//   Self.Visible := False;
-   frmHelp.ShowModal;
+   //Self.Show;
+   //Self.Enabled:= True;
 end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    ListNodes.Destroy;
-end;
-
-procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-begin
-   CanClose := Application.MessageBox(PWideChar(sExit),'Exit', msgQuestionProperty) = mrYes;
-end;
-
-procedure TfrmMain.FormShow(Sender: TObject);
-var
-   imPNG: TPngImage;
-begin
-
-   Self.SetFocus;
-end;
-
-procedure TfrmMain.imQuestionClick(Sender: TObject);
-begin
-   frmHelp.ShowModal;
 end;
 
 procedure TfrmMain.btnDesignerClick(Sender: TObject);
